@@ -16,7 +16,7 @@ const LoginPage = () => {
           <p className="text-sm">System v2.4.0</p>
         </div>
       </div>
-      <div className="w-1/2 bg-white flex items-center justify-center">
+      <div className="w-1/2 bg-gray-100 flex items-center justify-center">
         <div className="w-full max-w-md p-8">
           <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
           <p className="text-gray-600 mb-8">Sign in to manage your maintenance tasks and team workflow.</p>
