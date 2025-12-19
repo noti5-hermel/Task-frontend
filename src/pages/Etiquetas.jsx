@@ -1,8 +1,8 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
-import EtiquetasHeader from '../components/EtiquetasHeader';
-import CreateEtiquetaForm from '../components/CreateEtiquetaForm';
-import EtiquetasTable from '../components/EtiquetasTable';
+import EtiquetasHeader from '../components/Etiquetas/EtiquetasHeader';
+import CreateEtiquetaForm from '../components/Etiquetas/CreateEtiquetaForm';
+import EtiquetasTable from '../components/Etiquetas/EtiquetasTable';
 
 const Etiquetas = () => {
   return (

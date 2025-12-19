@@ -11,7 +11,7 @@ import UserManagement from "./pages/UserManagement";
 
 function App() {
   //return <LoginPage />;
-  //return <Principal />;
+  return <Principal />;
   //return <GestionTablas />;
   //return <Etiquetas />;
   //return <TaskDetail />;

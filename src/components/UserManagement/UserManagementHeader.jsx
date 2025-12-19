@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserManagementHeader = () => {
+const UserManagementHeader = ({ onNewUserClick }) => {
   return (
     <header className="flex items-center justify-between p-4 bg-white border-b">
       <div>
@@ -14,7 +14,10 @@ const UserManagementHeader = () => {
           </svg>
           Exportar
         </button>
-        <button className="ml-4 px-4 py-2 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
+        <button 
+          className="ml-4 px-4 py-2 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+          onClick={onNewUserClick}
+        >
           + Añadir Usuario
         </button>
       </div>
