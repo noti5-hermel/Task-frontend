@@ -9,13 +9,22 @@ import {useAuth} from '../hooks/useAuth';
 const LoginPage = () => {
   const {loginUser}=useAuth();
 
-  const handleSubmit=async(formData)=>{
-    try{
-      await loginUser(formData);
-    }catch(error){
-      console.error("Login failed",error);
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // 1. Evitamos que la página se recargue
+  
+    // 2. Extraemos los datos del formulario que disparó el evento
+    const formData = new FormData(event.target);
+    const formProps = Object.fromEntries(formData);
+  
+    try {
+      // 3. Ahora sí, llamamos a loginUser con los datos correctos
+      await loginUser(formProps);
+      // redirect después de login
+    } catch (error) {
+      console.error(error);
     }
   };
+  
 
   return (
     <div className="flex h-screen">
