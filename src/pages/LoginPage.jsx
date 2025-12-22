@@ -1,8 +1,22 @@
+//UI
 import React from 'react';
 import Button from '../components/Button';
 import Input from '../components/Input';
+//API
+import {useAuth} from '../hooks/useAuth';
+
 
 const LoginPage = () => {
+  const {loginUser}=useAuth();
+
+  const handleSubmit=async(formData)=>{
+    try{
+      await loginUser(formData);
+    }catch(error){
+      console.error("Login failed",error);
+    }
+  };
+
   return (
     <div className="flex h-screen">
       <div className="w-1/2 bg-blue-900 text-white flex flex-col justify-between p-12">
@@ -20,12 +34,12 @@ const LoginPage = () => {
         <div className="w-full max-w-md p-8">
           <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
           <p className="text-gray-600 mb-8">Sign in to manage your maintenance tasks and team workflow.</p>
-          <form>
-            <Input label="Email or Username" placeholder="name@company.com" />
+          <form onSubmit={handleSubmit}>
+            <Input label="Email or Username" name="email" placeholder="name@company.com" />
             <div className="flex justify-end mb-4">
                 <a href="#" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
             </div>
-            <Input label="Password" type="password" placeholder="Enter your password" />
+            <Input label="Password" type="password" name="password_hash" placeholder="Enter your password" />
             <Button>Log In</Button>
           </form>
           <div className="text-center mt-4">
