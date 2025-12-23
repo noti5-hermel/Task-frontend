@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 
 export const isTokenValid = () => {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem('token');
 
   if (!token) {
     return false;
@@ -22,7 +22,7 @@ export const isTokenValid = () => {
   } catch (error) {
     // Si hay un error al decodificar, el token es inválido
     console.error("Error decoding token:", error);
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     return false;
   }
 };
