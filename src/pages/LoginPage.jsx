@@ -15,6 +15,8 @@ const LoginPage = () => {
     // 2. Extraemos los datos del formulario que disparó el evento
     const formData = new FormData(event.target);
     const formProps = Object.fromEntries(formData);
+
+    console.log('Datos del formulario:', formProps);
   
     try {
       // 3. Ahora sí, llamamos a loginUser con los datos correctos

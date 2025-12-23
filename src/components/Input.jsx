@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Input = ({ label, type = 'text', placeholder }) => {
+const Input = ({ label, type = 'text',name, placeholder ,...rest}) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -12,9 +12,11 @@ const Input = ({ label, type = 'text', placeholder }) => {
       <label className="block text-sm font-medium text-gray-700">{label}</label>
       <div className="relative">
         <input
+        name={name}
           type={isPasswordVisible ? 'text' : type}
           placeholder={placeholder}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          {...rest}
         />
         {type === 'password' && (
           <button
