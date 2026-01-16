@@ -1,17 +1,8 @@
 import api from './api';
 
 /**
- * Crea un nuevo usuario.
- * @param {object} userData - Los datos del nuevo usuario.
- * @returns {Promise<object>} La respuesta de la API.
- */
-export const createUser = (userData) => {
-  return api.post('/user', userData);
-};
-
-/**
  * Obtiene todos los usuarios.
- * @returns {Promise<object>} La respuesta de la API con la lista de usuarios.
+ * @returns {Promise<object>} La respuesta de la API.
  */
 export const getAllUsers = () => {
   return api.get('/user');
@@ -20,16 +11,25 @@ export const getAllUsers = () => {
 /**
  * Obtiene un usuario por su ID.
  * @param {string} id - El ID del usuario.
- * @returns {Promise<object>} La respuesta de la API con los datos del usuario.
+ * @returns {Promise<object>} La respuesta de la API.
  */
 export const getUserById = (id) => {
   return api.get(`/user/${id}`);
 };
 
 /**
+ * Crea un nuevo usuario.
+ * @param {object} userData - Los datos del usuario a crear.
+ * @returns {Promise<object>} La respuesta de la API.
+ */
+export const createUser = (userData) => {
+  return api.post('/user', userData);
+};
+
+/**
  * Actualiza un usuario por su ID.
  * @param {string} id - El ID del usuario a actualizar.
- * @param {object} userData - Los nuevos datos del usuario.
+ * @param {object} userData - Los datos a actualizar.
  * @returns {Promise<object>} La respuesta de la API.
  */
 export const updateUserById = (id, userData) => {

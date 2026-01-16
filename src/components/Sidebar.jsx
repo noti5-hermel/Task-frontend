@@ -1,13 +1,39 @@
-import React from 'react';
-import { useAuth } from '../hooks/useAuth'; // 1. Importamos el hook
+import React, { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../hooks/useAuth';
+import { getUserById } from '../services/userService'; // Importamos la nueva función
 
 const Sidebar = () => {
-  const { logout } = useAuth(); // 2. Obtenemos la función logout
+  const { logout } = useAuth();
+  const [userName, setUserName] = useState('Loading...'); // Estado para el nombre de usuario
 
-  // 3. Creamos un manejador para el evento click
+  useEffect(() => {
+    // Función asíncrona para obtener los datos del usuario
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          const userId = decoded.id; // Asumiendo que el payload tiene 'id'
+          
+          // Llamamos al servicio para obtener los datos del usuario
+          const response = await getUserById(userId);
+          
+          // Asumiendo que la respuesta tiene un campo 'name' o 'fullName'
+          setUserName(response.data.name || response.data.fullName || 'User');
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          setUserName('User'); // En caso de error, mostramos un nombre genérico
+        }
+      }
+    };
+
+    fetchUserData();
+  }, []); // El array vacío asegura que se ejecute solo una vez, al montar el componente
+
   const handleLogout = (event) => {
-    event.preventDefault(); // Prevenimos la navegación si usamos un <a>
-    logout(); // ¡Llamamos a la función del hook!
+    event.preventDefault();
+    logout();
   };
 
   return (
@@ -37,11 +63,11 @@ const Sidebar = () => {
         <div className="flex items-center">
           <img className="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Avatar" />
           <div className="ml-4">
-            <p className="font-medium">Carlos Admin</p>
+            {/* Mostramos el nombre de usuario del estado */}
+            <p className="font-medium">{userName}</p>
             <a href="#" className="text-sm text-gray-500 hover:text-gray-700">Ver Perfil</a>
           </div>
         </div>
-        {/* 4. Usamos un botón y le asignamos el manejador */}
         <button 
           onClick={handleLogout} 
           className="w-full text-left flex items-center mt-5 text-gray-600 rounded-md hover:bg-gray-200 focus:outline-none">
