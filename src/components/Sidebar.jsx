@@ -1,13 +1,22 @@
-import React from "react";
+import React from 'react';
+import { useAuth } from '../hooks/useAuth'; // 1. Importamos el hook
 
 const Sidebar = () => {
+  const { logout } = useAuth(); // 2. Obtenemos la función logout
+
+  // 3. Creamos un manejador para el evento click
+  const handleLogout = (event) => {
+    event.preventDefault(); // Prevenimos la navegación si usamos un <a>
+    logout(); // ¡Llamamos a la función del hook!
+  };
+
   return (
-    <div className="w-64 bg-white shadow-md">
+    <div className="w-64 bg-white shadow-md flex flex-col">
       <div className="p-4">
         <h1 className="text-2xl font-bold">ManteniApp</h1>
         <p className="text-sm text-gray-500">v1.2.0 - Admin</p>
       </div>
-      <nav className="mt-8">
+      <nav className="mt-8 flex-grow">
         <a href="#" className="flex items-center px-4 py-2 text-gray-700 bg-gray-200 rounded-md">
           <span className="mx-4 font-medium">Dashboard</span>
         </a>
@@ -24,7 +33,7 @@ const Sidebar = () => {
           <span className="mx-4 font-medium">Reportes</span>
         </a>
       </nav>
-      <div className="absolute bottom-0 p-4">
+      <div className="p-4">
         <div className="flex items-center">
           <img className="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Avatar" />
           <div className="ml-4">
@@ -32,9 +41,12 @@ const Sidebar = () => {
             <a href="#" className="text-sm text-gray-500 hover:text-gray-700">Ver Perfil</a>
           </div>
         </div>
-        <a href="#" className="flex items-center mt-5 text-gray-600 rounded-md hover:bg-gray-200">
+        {/* 4. Usamos un botón y le asignamos el manejador */}
+        <button 
+          onClick={handleLogout} 
+          className="w-full text-left flex items-center mt-5 text-gray-600 rounded-md hover:bg-gray-200 focus:outline-none">
           <span className="mx-4 font-medium">Cerrar Sesion</span>
-        </a>
+        </button>
       </div>
     </div>
   );
