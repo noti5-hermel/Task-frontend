@@ -16,7 +16,7 @@ export const isTokenValid = () => {
       return true; // El token sigue siendo válido
     } else {
       // El token ha expirado, así que lo eliminamos del almacenamiento
-      localStorage.removeItem('authToken');
+      localStorage.removeItem('token');
       return false;
     }
   } catch (error) {

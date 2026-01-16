@@ -29,7 +29,7 @@ export default function AppRouter() {
         </Route>
 
         {/* (Opcional) Una ruta por defecto para redirigir si se entra a la raíz "/" */}
-        <Route path="/" element={<Navigate to="/principal" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
 
       </Routes>
     </BrowserRouter>
