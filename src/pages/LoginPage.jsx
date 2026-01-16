@@ -1,32 +1,32 @@
-//UI
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../components/Button';
 import Input from '../components/Input';
-//API
-import {useAuth} from '../hooks/useAuth';
-
+import { useAuth } from '../hooks/useAuth';
 
 const LoginPage = () => {
-  const {loginUser}=useAuth();
+  // Nuestro hook personalizado nos provee la lógica de login
+  const { login } = useAuth(); 
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // 1. Evitamos que la página se recargue
-  
-    // 2. Extraemos los datos del formulario que disparó el evento
-    const formData = new FormData(event.target);
-    const formProps = Object.fromEntries(formData);
+    event.preventDefault();
+    setError(null); // Limpiamos errores previos
 
-    console.log('Datos del formulario:', formProps);
+    const formData = new FormData(event.target);
+    const credentials = Object.fromEntries(formData);
+
+    console.log('Intentando iniciar sesión con:', credentials);
   
     try {
-      // 3. Ahora sí, llamamos a loginUser con los datos correctos
-      await loginUser(formProps);
-      // redirect después de login
-    } catch (error) {
-      console.error(error);
+      // Llamamos a la función 'login' del hook, no 'loginUser'
+      await login(credentials);
+      // La redirección ya la maneja el hook, así que no necesitamos hacer nada más aquí.
+    } catch (err) {
+      // Si el hook lanza un error (ej. contraseña incorrecta), lo capturamos
+      setError('Login failed. Please check your credentials.');
+      console.error(err);
     }
   };
-  
 
   return (
     <div className="flex h-screen">
@@ -51,6 +51,10 @@ const LoginPage = () => {
                 <a href="#" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
             </div>
             <Input label="Password" type="password" name="password_hash" placeholder="Enter your password" />
+            
+            {/* Mostramos el mensaje de error si existe */}
+            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
             <Button>Log In</Button>
           </form>
           <div className="text-center mt-4">
