@@ -17,8 +17,11 @@ const Sidebar = () => {
           
           const response = await getUserById(userId);
           
-          // CORREGIDO: Usamos el campo 'username' que viene de la API
-          setUserName(response.data.username || 'User');
+          // MANEJO ROBUSTO: Comprobamos si la respuesta es un string y la parseamos
+          const userData = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+          
+          // Ahora sí, accedemos a la propiedad del objeto parseado
+          setUserName(userData.username || 'User');
         } catch (error) {
           console.error('Error fetching user data:', error);
           setUserName('User');
