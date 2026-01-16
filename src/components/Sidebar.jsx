@@ -1,35 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useAuth } from '../hooks/useAuth';
-import { getUserById } from '../services/userService'; // Importamos la nueva función
+import { getUserById } from '../services/userService';
 
 const Sidebar = () => {
   const { logout } = useAuth();
-  const [userName, setUserName] = useState('Loading...'); // Estado para el nombre de usuario
+  const [userName, setUserName] = useState('Loading...');
 
   useEffect(() => {
-    // Función asíncrona para obtener los datos del usuario
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          const userId = decoded.id; // Asumiendo que el payload tiene 'id'
+          const userId = decoded.id;
           
-          // Llamamos al servicio para obtener los datos del usuario
           const response = await getUserById(userId);
           
-          // Asumiendo que la respuesta tiene un campo 'name' o 'fullName'
-          setUserName(response.data.name || response.data.fullName || 'User');
+          // CORREGIDO: Usamos el campo 'username' que viene de la API
+          setUserName(response.data.username || 'User');
         } catch (error) {
           console.error('Error fetching user data:', error);
-          setUserName('User'); // En caso de error, mostramos un nombre genérico
+          setUserName('User');
         }
       }
     };
 
     fetchUserData();
-  }, []); // El array vacío asegura que se ejecute solo una vez, al montar el componente
+  }, []);
 
   const handleLogout = (event) => {
     event.preventDefault();
@@ -63,7 +61,6 @@ const Sidebar = () => {
         <div className="flex items-center">
           <img className="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Avatar" />
           <div className="ml-4">
-            {/* Mostramos el nombre de usuario del estado */}
             <p className="font-medium">{userName}</p>
             <a href="#" className="text-sm text-gray-500 hover:text-gray-700">Ver Perfil</a>
           </div>
