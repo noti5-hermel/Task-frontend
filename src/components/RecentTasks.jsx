@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // 1. Importar Link
 
 const tasks = [
   {
@@ -47,34 +48,46 @@ const tasks = [
   },
 ];
 
+// 2. Modificar el componente TaskCard
 const TaskCard = ({ task }) => (
-  <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-red-500 flex items-center justify-between">
-    <div className="flex items-center">
-      <div className={`w-12 h-12 flex items-center justify-center rounded-lg bg-${task.priorityColor}-100 mr-4`}>
-        {/* Icon based on priority - this is a placeholder */}
+  // Convertimos el contenedor en un Link y pasamos una ruta limpia
+  <Link 
+    to={`/task-detail/${task.id.replace('#', '')}`}
+    className="block bg-white p-4 rounded-lg shadow-sm border-l-4 border-red-500 flex items-center justify-between hover:shadow-md transition-shadow cursor-pointer"
+  >
+    <div className="flex items-center flex-grow min-w-0">
+      <div className={`w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-lg bg-${task.priorityColor}-100 mr-4`}>
         <span className={`text-2xl text-${task.priorityColor}-600`}>!</span>
       </div>
-      <div>
+      <div className="min-w-0">
         <div className="flex items-center space-x-2 text-sm">
           <span className="font-bold text-gray-800">{task.id}</span>
           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full bg-${task.priorityColor}-100 text-${task.priorityColor}-800`}>{task.priority}</span>
           <span className="text-blue-500 font-medium">{task.category}</span>
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 mt-1">{task.title}</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mt-1 truncate">{task.title}</h3>
         <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
           <span>{task.time}</span>
-          <span>{task.assignee}</span>
+          <span className="truncate">{task.assignee}</span>
         </div>
       </div>
     </div>
-    <div className="flex items-center">
+    <div className="flex items-center flex-shrink-0 ml-4">
         <img src={task.avatar} alt={task.assignee} className="w-8 h-8 rounded-full"/>
         <span className="ml-3 mr-4 px-3 py-1 rounded-full bg-gray-200 text-gray-800 text-sm font-medium">{task.status}</span>
-        <button className="text-gray-400 hover:text-gray-600">
+        {/* 3. Prevenir la navegación al hacer clic en el botón de opciones */}
+        <button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Options for', task.id);
+          }}
+          className="text-gray-400 hover:text-gray-600"
+        >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
         </button>
     </div>
-  </div>
+  </Link>
 );
 
 const RecentTasks = () => {
