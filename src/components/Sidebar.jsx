@@ -20,8 +20,9 @@ const Sidebar = () => {
           // MANEJO ROBUSTO: Comprobamos si la respuesta es un string y la parseamos
           const userData = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
           
+          console.log('User Data:', userData.data.username);
           // Ahora sí, accedemos a la propiedad del objeto parseado
-          setUserName(userData.username || 'User');
+          setUserName(userData.data.username || 'User');
         } catch (error) {
           console.error('Error fetching user data:', error);
           setUserName('User');
